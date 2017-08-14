@@ -11,6 +11,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   :name                               => "onelogin",
   :issuer                             => "http://localhost:5000",
   :idp_sso_target_url                 => 'https://anadea-inc-dev.onelogin.com/trust/saml2/http-post/sso/691207',
+  :idp_slo_target_url                 => 'https://anadea-inc-dev.onelogin.com/trust/saml2/http-redirect/slo/691207',
   :idp_cert_fingerprint               => 'F9:C2:E2:22:E7:6C:DD:6B:06:6C:27:5C:96:39:2D:1D:ED:F4:70:15',
   :name_identifier_format             => "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
   :idp_sso_target_url_runtime_params  => { :redirectUrl => :RelayState },

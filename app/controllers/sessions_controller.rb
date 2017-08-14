@@ -5,4 +5,9 @@ class SessionsController < ApplicationController
     session[:provider] = params[:name]
     redirect_to(params[:RelayState] || '/')
   end
+
+  def destroy
+    session.destroy
+    redirect_to(root_url)
+  end
 end

@@ -2,7 +2,6 @@ class OneloginController < ApplicationController
   before_filter :protected!
 
   def index
-    render text: 'Welcome to Onelogin'
   end
 
   private
