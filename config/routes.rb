@@ -7,4 +7,5 @@ Rails.application.routes.draw do
 
   get 'okta', to: 'okta#index'
   get 'onelogin', to: 'onelogin#index'
+  get 'lastpass', to: 'lastpass#index'
 end

@@ -18,4 +18,13 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   :idp_sso_target_url_runtime_params  => { :redirectUrl => :RelayState },
   :skip_destination                   => true,
   :skip_subject_confirmation          => true
+
+  provider :saml,
+  :name                               => "lastpass",
+  :issuer                             => "http://localhost:5000",
+  :idp_sso_target_url                 => 'https://lastpass.com/saml/login/8996082/dc34',
+  :idp_slo_target_url                 => 'https://lastpass.com/saml/logout/8996082/dc34',
+  :idp_cert_fingerprint               => '38:28:23:D3:BB:BA:E9:7D:75:7C:0B:DF:3A:1B:58:E4:2A:40:49:09',
+  :name_identifier_format             => "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
+  :idp_sso_target_url_runtime_params  => { :redirectUrl => :RelayState }
 end
