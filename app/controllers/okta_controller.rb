@@ -9,6 +9,10 @@ class OktaController < ApplicationController
 
   def protected!
     return if authorized?
-    redirect_to ("/auth/okta?redirectUrl=#{URI::encode(request.path)}")
+    redirect_to("/auth/okta?redirectUrl=#{URI::encode(request.path)}")
+  end
+
+  def authorized?
+    super && session[:provider] == 'okta'
   end
 end

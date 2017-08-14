@@ -9,6 +9,10 @@ class OneloginController < ApplicationController
 
   def protected!
     return if authorized?
-    redirect_to ("/auth/onelogin?redirectUrl=#{URI::encode(request.path)}")
+    redirect_to("/auth/onelogin?redirectUrl=#{URI::encode(request.path)}")
+  end
+
+  def authorized?
+    super && session[:provider] == 'onelogin'
   end
 end

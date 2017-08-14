@@ -4,6 +4,6 @@ class ApplicationController < ActionController::Base
   private
 
   def authorized?
-    !session[:user_id].nil?
+    session[:user_id].present?
   end
 end
