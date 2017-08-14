@@ -2,7 +2,6 @@ class OktaController < ApplicationController
   before_filter :protected!
 
   def index
-    render text: 'Welcome to Okta'
   end
 
   private
