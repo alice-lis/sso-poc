@@ -6,7 +6,16 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   :idp_slo_target_url                 => 'https://dev-131242.oktapreview.com/app/anadeaincdev131242_oktapoc_1/exkbl58qg4JAmiTmF0h7/slo/saml',
   :idp_cert_fingerprint               => '62:8D:DA:99:C4:97:12:DC:F3:32:59:04:84:26:57:C4:7E:86:1C:F7',
   :name_identifier_format             => "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
-  :idp_sso_target_url_runtime_params  => { :redirectUrl => :RelayState }
+  :idp_sso_target_url_runtime_params  => { :redirectUrl => :RelayState },
+  :soft                               => false,
+  :private_key                        => File.read(Rails.root.join('crt/sp.key')),
+  :certificate                        => File.read(Rails.root.join('crt/sp.crt')),
+  :security => {
+    :logout_requests_signed           => true,
+    :embed_sign                       => true,
+    :digest_method                    => XMLSecurity::Document::SHA256,
+    :signature_method                 => XMLSecurity::Document::RSA_SHA256
+  }
 
   provider :saml,
   :name                               => "onelogin",
