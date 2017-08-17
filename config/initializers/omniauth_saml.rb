@@ -12,7 +12,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   :certificate                        => File.read(Rails.root.join('crt/sp.crt')),
   :security => {
     :logout_requests_signed           => true,
-    :embed_sign                       => true,
+    :embed_sign                       => false,
     :digest_method                    => XMLSecurity::Document::SHA256,
     :signature_method                 => XMLSecurity::Document::RSA_SHA256
   }
