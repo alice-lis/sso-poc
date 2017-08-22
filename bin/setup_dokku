@@ -1,0 +1,26 @@
+#!/bin/bash
+
+APP_DOMAIN=${1}
+APP_NAME="app"
+DB_NAME="db"
+
+[[ -z $1 ]] && echo "APP_DOMAIN is mandatory, break." && exit 1
+
+DOKKU_COMMAND="ssh dokku@${APP_DOMAIN}"
+
+${DOKKU_COMMAND} apps:create ${APP_NAME}
+
+${DOKKU_COMMAND} postgres:create ${DB_NAME}
+
+${DOKKU_COMMAND} postgres:link ${DB_NAME} ${APP_NAME}
+
+${DOKKU_COMMAND} domains:clear
+${DOKKU_COMMAND} domains:add ${APP_NAME} ${APP_DOMAIN}
+${DOKKU_COMMAND} domains:remove ${APP_NAME} ${APP_NAME}.${APP_DOMAIN}
+
+${DOKKU_COMMAND} config:set --no-restart ${APP_NAME} HOST=${APP_DOMAIN} RAILS_SERVE_STATIC_FILES=1 \
+  DOKKU_LETSENCRYPT_EMAIL=itsupport@anadea.info
+
+$DOKKU_COMMAND storage:mount ${APP_NAME} /var/lib/dokku/data/storage/public_system:/app/public/system
+
+# ${DOKKU_COMMAND} letsencrypt ${APP_NAME}

@@ -1,0 +1,7 @@
+#!/bin/bash -x
+
+declare -r APP_DOMAIN=${APP_DOMAIN:-sso-poc.anahoret.net}
+
+source $(dirname $0)/dokku.lib.sh
+
+anadea.dokku.main $@
