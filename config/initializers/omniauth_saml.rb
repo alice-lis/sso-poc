@@ -25,9 +25,26 @@ setup_okta_proc = lambda do |env|
   env['omniauth.strategy'].options[:idp_cert_fingerprint] = '62:8D:DA:99:C4:97:12:DC:F3:32:59:04:84:26:57:C4:7E:86:1C:F7'
   env['omniauth.strategy'].options[:name_identifier_format] = "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
   env['omniauth.strategy'].options[:idp_sso_target_url_runtime_params] = { :redirectUrl => :RelayState }
-  env['omniauth.strategy'].options[:soft] = false
   env['omniauth.strategy'].options[:private_key] = File.read(Rails.root.join('crt/sp.key'))
   env['omniauth.strategy'].options[:certificate] = File.read(Rails.root.join('crt/sp.crt'))
+  env['omniauth.strategy'].options[:security] = {
+    logout_requests_signed: true,
+    embed_sign: false,
+    digest_method: XMLSecurity::Document::SHA256,
+    signature_method: XMLSecurity::Document::RSA_SHA256
+  }
+end
+
+setup_custom_proc = lambda do |env|
+  credential = Credential.first
+  env['omniauth.strategy'].options[:issuer] = "http://#{ENV.fetch('HOST')}"
+  env['omniauth.strategy'].options[:idp_sso_target_url] = credential.idp_sso_target_url
+  env['omniauth.strategy'].options[:idp_slo_target_url] = credential.idp_slo_target_url
+  env['omniauth.strategy'].options[:idp_cert_fingerprint] = credential.idp_cert_fingerprint
+  env['omniauth.strategy'].options[:name_identifier_format] = credential.name_identifier_format
+  env['omniauth.strategy'].options[:idp_sso_target_url_runtime_params] = { :redirectUrl => :RelayState }
+  env['omniauth.strategy'].options[:private_key] = File.read(credential.private_key.path)
+  env['omniauth.strategy'].options[:certificate] = File.read(credential.certificate.path)
   env['omniauth.strategy'].options[:security] = {
     logout_requests_signed: true,
     embed_sign: false,
@@ -40,4 +57,5 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :saml, name: 'okta',     setup: setup_okta_proc
   provider :saml, name: 'onelogin', setup: setup_onelogin_proc
   provider :saml, name: 'lastpass', setup: setup_lastpass_proc
+  provider :saml, name: 'custom', setup: setup_custom_proc
 end
