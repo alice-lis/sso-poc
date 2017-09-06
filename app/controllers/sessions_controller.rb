@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
     auth = request.env['omniauth.auth']
     session[:user_id] = auth[:uid]
     session[:provider] = params[:name]
-    redirect_to(params[:RelayState] || '/')
+    redirect_to(params[:redirectUrl] || '/')
   end
 
   def destroy
