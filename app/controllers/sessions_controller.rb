@@ -8,6 +8,6 @@ class SessionsController < ApplicationController
 
   def destroy
     session.destroy
-    redirect_to(root_url)
+    redirect_to('/auth/custom/spslo?RelayState=/')
   end
 end

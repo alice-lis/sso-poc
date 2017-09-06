@@ -19,7 +19,7 @@ class CredentialsController < ApplicationController
   def update
     @credential = Credential.first
     if @credential.update(credential_params)
-      redirect_to("/auth/custom?RelayState=/session/create%3FredirectUrl=/custom")
+      redirect_to('/auth/custom?redirectUrl=/custom')
     else
       render :edit
     end
