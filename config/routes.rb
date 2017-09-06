@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: 'homes#index'
 
   post '/auth/:name/callback', to: 'sessions#create'
-  match '/auth/saml/slo', to: 'sessions#destroy', via: [:get, :post]
+  match '/session', to: 'sessions#destroy', via: :get
 
   get 'okta', to: 'okta#index'
   get 'onelogin', to: 'onelogin#index'
