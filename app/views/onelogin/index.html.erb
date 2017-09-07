@@ -1,2 +1,2 @@
 <h1>Welcome to Onelogin</h1>
-<h3><%= link_to 'Logout', '/auth/onelogin/spslo' %></h3>
+<h3><%= link_to 'Logout', session_path(provider: 'onelogin'), method: :delete %></h3>

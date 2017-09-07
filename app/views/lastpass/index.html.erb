@@ -1,2 +1,2 @@
 <h1>Welcome to LastPass</h1>
-<h3><%= link_to 'Logout', '/auth/lastpass/spslo' %></h3>
+<h3><%= link_to 'Logout', session_path(provider: 'lastpass'), method: :delete %></h3>

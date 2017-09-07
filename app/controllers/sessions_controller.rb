@@ -7,7 +7,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    provider = params.require(:provider)
     session.destroy
-    redirect_to('/auth/custom/spslo?RelayState=/')
+    redirect_to("/auth/#{provider}/spslo?RelayState=/")
   end
 end

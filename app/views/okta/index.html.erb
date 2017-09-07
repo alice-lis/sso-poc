@@ -1,2 +1,2 @@
 <h1>Welcome to Okta</h1>
-<h3><%= link_to 'Logout', "/auth/okta/spslo?RelayState=slo_testing" %></h3>
+<h3><%= link_to 'Logout', session_path(provider: 'okta'), method: :delete %></h3>
